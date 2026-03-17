@@ -39,7 +39,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* ── Page header ── */
 .hero{background:#fff;padding:20px 0 0;border-bottom:1px solid var(--border)}
-.hero-inner{max-width:980px;margin:0 auto;padding:0 20px 20px}
+.hero-inner{max-width:1100px;margin:0 auto;padding:0 20px 20px}
 .breadcrumb{display:flex;align-items:center;gap:5px;font-size:12px;margin-bottom:10px;flex-wrap:wrap}
 .breadcrumb a{color:var(--muted);text-decoration:none;transition:color .15s}
 .breadcrumb a:hover{color:var(--blue)}
@@ -52,7 +52,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .hero-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;background:#f1f5f9;border:1px solid var(--border);font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.03em}
 
 /* ── Layout ── */
-.wrap{max-width:980px;margin:0 auto;padding:24px 20px 80px}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 20px 80px}
 
 /* ── Stat cards ── */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
@@ -97,9 +97,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* ── Table ── */
 .tbl-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:780px}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:1000px}
 thead th{text-align:left;padding:10px 12px;border-bottom:1.5px solid var(--border);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);background:#f8fafc;white-space:nowrap}
-td{padding:12px;border-bottom:1px solid var(--border);vertical-align:middle}
+td{padding:11px 12px;border-bottom:1px solid var(--border);vertical-align:middle}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#f8faff}
 tr.hl td{background:#fffbeb!important;transition:background 1s}
@@ -108,13 +108,27 @@ tr.hl td{background:#fffbeb!important;transition:background 1s}
 .tname{font-weight:600;color:var(--text)}
 .tsub{font-size:11px;color:var(--dim);margin-top:2px}
 .tpill{display:inline-flex;padding:1px 8px;border-radius:6px;font-size:11px;font-weight:600;background:#f1f5f9;color:var(--muted);border:1px solid var(--border)}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+
+/* ── Status badge — SINGLE SOURCE OF TRUTH ── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
 .badge::before{content:'';width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.badge.active{background:var(--green-lt);color:var(--green-dk)}
+.badge.active{background:var(--green-lt);color:var(--green-dk);border:1px solid #a7f3d0}
 .badge.active::before{background:var(--green)}
-.badge.inactive{background:#f1f5f9;color:#475569}
+.badge.inactive{background:#f1f5f9;color:#475569;border:1px solid var(--border2)}
 .badge.inactive::before{background:var(--dim)}
+
 .row-info{font-size:11px;color:var(--dim);margin-top:12px}
+
+/* ── Area full name display ── */
+.area-name{font-size:12px;font-weight:600;color:var(--text2)}
+.area-id{font-size:10px;color:var(--dim);margin-top:1px}
+
+/* ── Date/time cell ── */
+.dt-date{font-size:12px;font-weight:500;color:var(--text2)}
+.dt-time{font-size:10px;color:var(--dim);margin-top:1px;font-family:'JetBrains Mono',monospace}
+
+/* ── Captured by cell ── */
+.cap-by{font-size:12px;font-weight:500;color:var(--text2)}
 
 /* ── Action buttons ── */
 .act-btns{display:flex;gap:5px}
@@ -172,6 +186,7 @@ tr.hl td{background:#fffbeb!important;transition:background 1s}
 .toggle-sw input:checked + .toggle-sl{background:var(--green)}
 .toggle-sw input:checked + .toggle-sl::before{transform:translateX(18px)}
 .toggle-lbl{font-size:13px;font-weight:500;color:var(--text2)}
+.toggle-lbl-badge{margin-left:4px}
 
 /* ── Delete confirm ── */
 .del-box{background:var(--red-lt);border:1px solid #fecaca;border-radius:var(--r);padding:12px 14px;margin:10px 0}
@@ -186,6 +201,8 @@ tr.hl td{background:#fffbeb!important;transition:background 1s}
 .dval{font-size:13px;font-weight:500;color:var(--text);word-break:break-word}
 .dval.mono{font-family:'JetBrains Mono',monospace;font-size:12px}
 .dval.empty{color:var(--dim);font-style:italic;font-weight:400}
+.dval-date{font-size:13px;font-weight:500;color:var(--text)}
+.dval-time{font-size:11px;color:var(--dim);margin-top:2px;font-family:'JetBrains Mono',monospace}
 
 /* ── Toast ── */
 .toast-wrap{position:fixed;bottom:24px;right:24px;z-index:300;display:flex;flex-direction:column;gap:8px;pointer-events:none}
@@ -294,12 +311,14 @@ tr.hl td{background:#fffbeb!important;transition:background 1s}
         <table>
           <thead>
             <tr>
-              <th style="width:115px">Circuit ID</th>
-              <th>Circuit Name</th>
-              <th style="width:170px">Headquarters</th>
-              <th style="width:120px">Area</th>
+              <th style="width:110px">Circuit ID</th>
+              <th style="min-width:150px">Circuit Name</th>
+              <th style="min-width:150px">Headquarters</th>
+              <th style="min-width:180px">Area</th>
               <th style="width:80px">Status</th>
-              <th style="width:160px">Last Updated</th>
+              <th style="width:105px">Captured Date</th>
+              <th style="width:95px">Captured Time</th>
+              <th style="width:100px">Captured By</th>
               <th style="width:105px">Actions</th>
             </tr>
           </thead>
@@ -374,7 +393,9 @@ tr.hl td{background:#fffbeb!important;transition:background 1s}
               <input type="checkbox" id="mIsActive" checked onchange="updateToggleLbl()">
               <span class="toggle-sl"></span>
             </label>
-            <span class="toggle-lbl" id="mActiveLbl">Active</span>
+            <span class="toggle-lbl" id="mActiveLbl">
+              <span class="badge active toggle-lbl-badge">Active</span>
+            </span>
           </div>
         </div>
 
@@ -453,7 +474,6 @@ tr.hl td{background:#fffbeb!important;transition:background 1s}
 <script>
 /* ═══════════════════════════════════════════════════════════
    REFERENCE DATA — Areas (FK from tbl_churcharea)
-   Swap with AJAX fetch in PHP implementation
 ═══════════════════════════════════════════════════════════ */
 const AREAS = [
   { id: '02GH0511', name: 'Dwenewoho Area',       territoryID: '02GH051' },
@@ -464,20 +484,27 @@ const AREAS = [
 ];
 
 /* ═══════════════════════════════════════════════════════════
-   SAMPLE DATA  (matches updated tbl_churchcicuit schema)
+   SAMPLE DATA
 ═══════════════════════════════════════════════════════════ */
 let rows = [
-  { id: '02GH05111', areaID: '02GH0511', name: 'Dwenewoho Circuit',     hq: 'Dwenewoho Central',  comment: '',                          active: 1, capturedby: 'admin', capturedDate: '25 Feb 2019', updatedAt: null,         updatedBy: null    },
-  { id: '02GH05112', areaID: '02GH0511', name: 'Manhean Circuit',        hq: 'Manhean Junction',   comment: 'Covers Manhean suburbs.',   active: 1, capturedby: 'admin', capturedDate: '10 Mar 2019', updatedAt: null,         updatedBy: null    },
-  { id: '02GH05121', areaID: '02GH0512', name: 'Adenta West Circuit',    hq: 'Adenta Frafraha',    comment: '',                          active: 1, capturedby: 'admin', capturedDate: '01 Apr 2019', updatedAt: '05 Jan 2026', updatedBy: 'admin' },
-  { id: '02GH05211', areaID: '02GH0521', name: 'Tema Port Circuit',      hq: 'Tema Fishing Harbour', comment: '',                        active: 0, capturedby: 'admin', capturedDate: '12 Jun 2020', updatedAt: '01 Mar 2026', updatedBy: 'admin' },
-  { id: '03AS00111', areaID: '03AS0011', name: 'Garki Central Circuit',  hq: 'Area 11 Garki',      comment: 'Abuja federal territory.',  active: 1, capturedby: 'admin', capturedDate: '20 Jan 2021', updatedAt: null,         updatedBy: null    },
+  { id: '02GH05111', areaID: '02GH0511', name: 'Dwenewoho Circuit',     hq: 'Dwenewoho Central',    comment: '',                          active: 1, capturedby: 'admin', capturedDate: '25 Feb 2019', capturedTime: '08:42 AM', updatedAt: null,          updatedTime: null,     updatedBy: null    },
+  { id: '02GH05112', areaID: '02GH0511', name: 'Manhean Circuit',        hq: 'Manhean Junction',     comment: 'Covers Manhean suburbs.',   active: 1, capturedby: 'admin', capturedDate: '10 Mar 2019', capturedTime: '10:15 AM', updatedAt: null,          updatedTime: null,     updatedBy: null    },
+  { id: '02GH05121', areaID: '02GH0512', name: 'Adenta West Circuit',    hq: 'Adenta Frafraha',      comment: '',                          active: 1, capturedby: 'admin', capturedDate: '01 Apr 2019', capturedTime: '09:00 AM', updatedAt: '05 Jan 2026', updatedTime: '02:31 PM', updatedBy: 'admin' },
+  { id: '02GH05211', areaID: '02GH0521', name: 'Tema Port Circuit',      hq: 'Tema Fishing Harbour', comment: '',                          active: 0, capturedby: 'admin', capturedDate: '12 Jun 2020', capturedTime: '11:50 AM', updatedAt: '01 Mar 2026', updatedTime: '04:05 PM', updatedBy: 'admin' },
+  { id: '03AS00111', areaID: '03AS0011', name: 'Garki Central Circuit',  hq: 'Area 11 Garki',        comment: 'Abuja federal territory.',  active: 1, capturedby: 'admin', capturedDate: '20 Jan 2021', capturedTime: '03:20 PM', updatedAt: null,          updatedTime: null,     updatedBy: null    },
 ];
 
 let viewingID = null;
 
 /* ── Lookup helpers ── */
-function getArea(id){ return AREAS.find(x => x.id === id) || { name: '—', territoryID: '—' }; }
+function getArea(id){ return AREAS.find(x => x.id === id) || { id: id, name: 'Unknown Area', territoryID: '—' }; }
+
+/* ── Status badge helper — SINGLE SOURCE OF TRUTH ── */
+function statusBadge(active){
+  return active
+    ? '<span class="badge active">Active</span>'
+    : '<span class="badge inactive">Inactive</span>';
+}
 
 /* ═══════════════════════════════════════════════════════════
    POPULATE DROPDOWNS
@@ -511,28 +538,31 @@ function render(data){
   ri.textContent = 'Showing ' + data.length + ' of ' + rows.length + ' records';
 
   if(!data.length){
-    tb.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="empty-icon">🔄</div><p>No circuit records found.</p><button class="btn primary" style="margin-top:8px" onclick="openAdd()">Add first circuit</button></div></td></tr>`;
+    tb.innerHTML = `<tr><td colspan="9"><div class="empty"><div class="empty-icon">🔄</div><p>No circuit records found.</p><button class="btn primary" style="margin-top:8px" onclick="openAdd()">Add first circuit</button></div></td></tr>`;
     return;
   }
 
   tb.innerHTML = data.map(r => {
-    const area  = getArea(r.areaID);
-    const badge = r.active ? '<span class="badge active">Active</span>' : '<span class="badge inactive">Inactive</span>';
+    const area = getArea(r.areaID);
     const togCls   = r.active ? 'act-btn tog-on' : 'act-btn tog-off';
     const togTitle = r.active ? 'Deactivate' : 'Reactivate';
     const togSvg   = r.active
       ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="5" width="22" height="14" rx="7"/><circle cx="16" cy="12" r="3" fill="currentColor"/></svg>`
       : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="5" width="22" height="14" rx="7"/><circle cx="8" cy="12" r="3" fill="currentColor"/></svg>`;
+
+    // Captured date / time — separate cells
+    const capDateCell = r.capturedDate ? `<span class="dt-date">${r.capturedDate}</span>` : '<span style="color:var(--dim)">—</span>';
+    const capTimeCell = r.capturedTime ? `<span class="dt-time" style="font-family:\'JetBrains Mono\',monospace;font-size:12px;color:var(--text2)">${r.capturedTime}</span>` : '<span style="color:var(--dim)">—</span>';
+
     return `<tr id="row-${r.id}">
       <td><span class="tid" style="cursor:pointer" onclick="openView('${r.id}')" title="View details">${r.id}</span></td>
-      <td>
-        <div class="tname">${r.name}</div>
-        <div class="tsub">Captured: ${r.capturedDate} by ${r.capturedby}</div>
-      </td>
+      <td><div class="tname">${r.name}</div></td>
       <td><div class="tsub">${r.hq || '<span style="color:var(--dim)">—</span>'}</div></td>
-      <td><span class="tid area" title="${area.name}">${r.areaID}</span></td>
-      <td>${badge}</td>
-      <td style="font-size:11px;color:var(--dim)">${r.updatedAt ? r.updatedAt + ' by ' + r.updatedBy : '—'}</td>
+      <td><div class="area-name">${area.name}</div></td>
+      <td>${statusBadge(r.active)}</td>
+      <td>${capDateCell}</td>
+      <td>${capTimeCell}</td>
+      <td><span class="cap-by">${r.capturedby || '—'}</span></td>
       <td>
         <div class="act-btns">
           <button class="act-btn" title="View" onclick="openView('${r.id}')">
@@ -561,7 +591,8 @@ function doFilter(){
   const s  = document.getElementById('filtStatus').value;
   const a  = document.getElementById('filtArea').value;
   const filtered = rows.filter(r => {
-    const mq = !q || r.id.toLowerCase().includes(q) || r.name.toLowerCase().includes(q) || r.hq.toLowerCase().includes(q) || r.areaID.toLowerCase().includes(q);
+    const area = getArea(r.areaID);
+    const mq = !q || r.id.toLowerCase().includes(q) || r.name.toLowerCase().includes(q) || r.hq.toLowerCase().includes(q) || r.areaID.toLowerCase().includes(q) || area.name.toLowerCase().includes(q);
     const ms = s === '' || String(r.active) === s;
     const ma = a === '' || r.areaID === a;
     return mq && ms && ma;
@@ -577,9 +608,7 @@ function reloadTable(){
   showToast('Table refreshed', 'info');
 }
 
-/* ═══════════════════════════════════════════════════════════
-   HIGHLIGHT ROW
-═══════════════════════════════════════════════════════════ */
+/* ── Highlight row ── */
 function hlRow(id){
   setTimeout(() => {
     const r = document.getElementById('row-' + id);
@@ -588,6 +617,14 @@ function hlRow(id){
     r.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     setTimeout(() => r.classList.remove('hl'), 2500);
   }, 250);
+}
+
+/* ── Current datetime helpers ── */
+function nowDate(){
+  return new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+}
+function nowTime(){
+  return new Date().toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', hour12: true }).toUpperCase();
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -625,23 +662,24 @@ function validate(){
 }
 
 function updateToggleLbl(){
-  document.getElementById('mActiveLbl').textContent = document.getElementById('mIsActive').checked ? 'Active' : 'Inactive';
+  const active = document.getElementById('mIsActive').checked;
+  document.getElementById('mActiveLbl').innerHTML = statusBadge(active ? 1 : 0);
 }
 
 /* ═══════════════════════════════════════════════════════════
    ADD MODAL
 ═══════════════════════════════════════════════════════════ */
 function openAdd(){
-  document.getElementById('mOrigID').value          = '';
-  document.getElementById('mCircuitID').value        = '';
-  document.getElementById('mCircuitID').disabled     = false;
-  document.getElementById('mCircuitName').value      = '';
-  document.getElementById('mAreaID').value           = '';
-  document.getElementById('mCircuitHQ').value        = '';
-  document.getElementById('mCircuitComment').value   = '';
+  document.getElementById('mOrigID').value           = '';
+  document.getElementById('mCircuitID').value         = '';
+  document.getElementById('mCircuitID').disabled      = false;
+  document.getElementById('mCircuitName').value       = '';
+  document.getElementById('mAreaID').value            = '';
+  document.getElementById('mCircuitHQ').value         = '';
+  document.getElementById('mCircuitComment').value    = '';
   document.getElementById('mStatusRow').style.display = 'none';
-  document.getElementById('mTitleTxt').textContent   = 'Add Circuit';
-  document.getElementById('mSaveTxt').textContent    = 'Save circuit';
+  document.getElementById('mTitleTxt').textContent    = 'Add Circuit';
+  document.getElementById('mSaveTxt').textContent     = 'Save circuit';
   clearErrors();
   document.getElementById('formOverlay').classList.add('show');
   setTimeout(() => document.getElementById('mCircuitID').focus(), 100);
@@ -660,7 +698,7 @@ function openEdit(id){
   document.getElementById('mCircuitHQ').value         = r.hq;
   document.getElementById('mCircuitComment').value    = r.comment;
   document.getElementById('mIsActive').checked        = !!r.active;
-  document.getElementById('mActiveLbl').textContent   = r.active ? 'Active' : 'Inactive';
+  document.getElementById('mActiveLbl').innerHTML     = statusBadge(r.active);
   document.getElementById('mStatusRow').style.display = 'block';
   document.getElementById('mTitleTxt').textContent    = 'Edit Circuit — ' + id;
   document.getElementById('mSaveTxt').textContent     = 'Update circuit';
@@ -679,35 +717,37 @@ function saveRecord(){
   if(!validate()) return;
   const origID = document.getElementById('mOrigID').value;
   const isEdit = !!origID;
-  const now    = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
   const newID  = document.getElementById('mCircuitID').value.trim().toUpperCase();
 
   if(!isEdit){
     if(rows.find(x => x.id === newID)){ showToast('Circuit ID "' + newID + '" already exists.', 'warning'); return; }
     rows.push({
-      id:          newID,
-      areaID:      document.getElementById('mAreaID').value,
-      name:        document.getElementById('mCircuitName').value.trim(),
-      hq:          document.getElementById('mCircuitHQ').value.trim(),
-      comment:     document.getElementById('mCircuitComment').value.trim(),
-      active:      1,
-      capturedby:  'admin',
-      capturedDate: now,
-      updatedAt:   null,
-      updatedBy:   null,
+      id:           newID,
+      areaID:       document.getElementById('mAreaID').value,
+      name:         document.getElementById('mCircuitName').value.trim(),
+      hq:           document.getElementById('mCircuitHQ').value.trim(),
+      comment:      document.getElementById('mCircuitComment').value.trim(),
+      active:       1,
+      capturedby:   'admin',
+      capturedDate: nowDate(),
+      capturedTime: nowTime(),
+      updatedAt:    null,
+      updatedTime:  null,
+      updatedBy:    null,
     });
     closeForm(); doFilter(); updateStats();
     showToast('"' + document.getElementById('mCircuitName').value + '" added successfully.');
     hlRow(newID);
   } else {
-    const r      = rows.find(x => x.id === origID);
-    r.areaID     = document.getElementById('mAreaID').value;
-    r.name       = document.getElementById('mCircuitName').value.trim();
-    r.hq         = document.getElementById('mCircuitHQ').value.trim();
-    r.comment    = document.getElementById('mCircuitComment').value.trim();
-    r.active     = document.getElementById('mIsActive').checked ? 1 : 0;
-    r.updatedAt  = now;
-    r.updatedBy  = 'admin';
+    const r       = rows.find(x => x.id === origID);
+    r.areaID      = document.getElementById('mAreaID').value;
+    r.name        = document.getElementById('mCircuitName').value.trim();
+    r.hq          = document.getElementById('mCircuitHQ').value.trim();
+    r.comment     = document.getElementById('mCircuitComment').value.trim();
+    r.active      = document.getElementById('mIsActive').checked ? 1 : 0;
+    r.updatedAt   = nowDate();
+    r.updatedTime = nowTime();
+    r.updatedBy   = 'admin';
     closeForm(); doFilter(); updateStats();
     showToast('"' + r.name + '" updated successfully.');
     hlRow(origID);
@@ -720,18 +760,28 @@ function saveRecord(){
 function openView(id){
   const r = rows.find(x => x.id === id); if(!r) return;
   viewingID = id;
-  const area  = getArea(r.areaID);
-  const badge = r.active ? '<span class="badge active">Active</span>' : '<span class="badge inactive">Inactive</span>';
+  const area = getArea(r.areaID);
+
+  const capDateTime = r.capturedDate
+    ? `<div class="dval-date">${r.capturedDate}</div><div class="dval-time">${r.capturedTime || '—'}</div>`
+    : '<span class="dval empty">—</span>';
+
+  const updDateTime = r.updatedAt
+    ? `<div class="dval-date">${r.updatedAt}</div><div class="dval-time">${r.updatedTime || '—'}</div>`
+    : '<span class="dval empty">Never modified</span>';
+
   document.getElementById('detailGrid').innerHTML = `
     <div class="detail-cell"><div class="dlbl">Circuit ID</div><div class="dval mono">${r.id}</div></div>
-    <div class="detail-cell"><div class="dlbl">Status</div><div class="dval">${badge}</div></div>
+    <div class="detail-cell"><div class="dlbl">Status</div><div class="dval">${statusBadge(r.active)}</div></div>
     <div class="detail-cell full"><div class="dlbl">Circuit Name</div><div class="dval">${r.name}</div></div>
     <div class="detail-cell full"><div class="dlbl">Headquarters</div><div class="dval">${r.hq || '<span class="empty">Not specified</span>'}</div></div>
-    <div class="detail-cell"><div class="dlbl">Area</div><div class="dval"><span class="tid area">${r.areaID}</span> <span style="font-size:12px;color:var(--muted)">${area.name}</span></div></div>
-    <div class="detail-cell"><div class="dlbl">Territory</div><div class="dval" style="font-size:12px;color:var(--muted)">${area.territoryID}</div></div>
+    <div class="detail-cell"><div class="dlbl">Area Name</div><div class="dval">${area.name}</div></div>
+    <div class="detail-cell"><div class="dlbl">Area ID / Territory</div><div class="dval"><span class="tid area">${area.id}</span> <span style="font-size:12px;color:var(--muted)">${area.territoryID}</span></div></div>
     <div class="detail-cell full"><div class="dlbl">Comments</div><div class="dval">${r.comment || '<span class="empty">No comments recorded.</span>'}</div></div>
-    <div class="detail-cell"><div class="dlbl">Captured by</div><div class="dval">${r.capturedby} on ${r.capturedDate}</div></div>
-    <div class="detail-cell"><div class="dlbl">Last updated</div><div class="dval">${r.updatedAt ? r.updatedAt + ' by ' + r.updatedBy : '<span class="empty">Never modified</span>'}</div></div>
+    <div class="detail-cell"><div class="dlbl">Captured Date &amp; Time</div>${capDateTime}</div>
+    <div class="detail-cell"><div class="dlbl">Captured By</div><div class="dval">${r.capturedby || '<span class="empty">—</span>'}</div></div>
+    <div class="detail-cell"><div class="dlbl">Last Updated Date &amp; Time</div>${updDateTime}</div>
+    <div class="detail-cell"><div class="dlbl">Last Updated By</div><div class="dval">${r.updatedBy || '<span class="empty">—</span>'}</div></div>
   `;
   document.getElementById('viewOverlay').classList.add('show');
 }
@@ -743,9 +793,10 @@ function editFromView(){ closeView(); if(viewingID) openEdit(viewingID); }
 ═══════════════════════════════════════════════════════════ */
 function doToggle(id){
   const r = rows.find(x => x.id === id); if(!r) return;
-  r.active    = r.active ? 0 : 1;
-  r.updatedAt = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
-  r.updatedBy = 'admin';
+  r.active      = r.active ? 0 : 1;
+  r.updatedAt   = nowDate();
+  r.updatedTime = nowTime();
+  r.updatedBy   = 'admin';
   doFilter(); updateStats();
   showToast('Circuit ' + (r.active ? 'reactivated' : 'deactivated') + ': ' + r.id, r.active ? 'success' : 'warning');
   hlRow(id);
